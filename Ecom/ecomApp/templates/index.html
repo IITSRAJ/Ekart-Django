@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block body %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="row">
+    <!-------------------------------------- FILTERS -------------------------------------------->
+
+    <div class="col-md-3 mt-3">
+        <h4>Filter by Category</h4>
+        <hr>
+        <p><a href="{% url 'home' %}" class="text-decoration-none text-info">All</a></p>
+        <p><a href="{% url 'mobilefilter' %}" class="text-decoration-none text-info">Mobile</a></p>
+        <p><a href="{% url 'laptopfilter' %}" class="text-decoration-none text-info">Laptop</a></p>
+        <p><a href="{% url 'tvfilter' %}" class="text-decoration-none text-info">TV</a></p>
+
+        <h4>Filter by Price</h4>
+        <hr>
+        <form method="post" action="{% url 'rangefilter' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="min" class="form-label text-info">Min</label>
+                <input type="number" class="form-control" id="min" placeholder="Mininum" name="min">
+            </div>
+
+            <div class="mb-3">
+                <label for="max" class="form-label text-info">Max</label>
+                <input type="number" class="form-control" id="max" placeholder="Maximum" name="max">
+            </div>
+
+            <button type="submit" class="btn btn-success">Filter</button>
+            <p class="text-danger">{{msg}}</p>
+        </form>
+        <br>
+
+        <h4>Sort by Price</h4>
+        <hr>
+        <p><a href="{% url 'sortproducts' %}?sort=high_to_low" class="text-decoration-none text-info">High to Low</a>
+        </p>
+        <p><a href="{% url 'sortproducts' %}?sort=low_to_high" class="text-decoration-none text-info">Low to High</a>
+        </p>
+    </div>
+
+
+    <!------------------------------------ PRODUCTS ------------------------------------------>
+    <div class="col-md-9 mt-2">
+        <div class="row">
+            {% for product in products%}
+            <div class="card col-md-4">
+                <img src="{{product.image.url}}" class="card-img-top" alt="product"
+                    style=" height: 300px; object-fit: contain">
+                <div class="card-body ">
+                    <h5 class="card-title">{{product.prod_name}}</h5>
+                    <p class="card-text">₹ {{product.price}}</p>
+                    <a href="{% url 'addtocart' product.prod_id %}" class="btn btn-dark">Add to Cart</a>
+                    <a href="{% url 'prodDetail' product.pk %}" class="btn btn-info">View</a>
+                </div>
+            </div>
+
+            {% empty %} <!-- if anything is empty we can use this -->
+            <h3>Products not Available</h3>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Address {% endblock %}
+
+
+
+{% block body %}
+
+
+
+<div class="row m-5">
+    <h2 class="mb-3"> Select Address To Make Payment  </h2>
+
+    <div class="col-md-3 col-sm-3 col-lg-3 m-2" style="border: 1px groove grey; padding: 100px;">
+        <a class="text-decoration-none" href="{% url 'addaddress' %}">
+            <h4 style="text-align: center;"><i class="bi bi-plus-lg"></i></h4>
+            <h4 style="text-align: center;">Add Address</h4>
+        </a>
+    </div>
+
+    {% for address in addresses %}
+    <div class="col-md-3 col-sm-3 col-lg-3 m-2" style="border: 1px solid grey;">
+        <a class="text-decoration-none" href="{% url 'payment' %}">
+            <h4 class="pt-2">Name: {{address.user}}</h4>
+            <hr>
+            <h5 class="text-dark">Address: </h5>{{address.address}} <br><br>
+            <h5 class="text-dark">Zipcode: </h5>{{address.zipcode}} <br><br>
+            <h5 class="text-dark">Phone: </h5>{{address.phone}} <br><br>
+            <a href="{% url 'updateaddress' address.id %}" class="btn btn-success mb-3 me-2">Edit</a>
+            <a href="{% url 'deleteaddress' address.id %}" class="btn btn-danger mb-3">Delete</a>
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
