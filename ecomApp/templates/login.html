@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block body %}
+
+<br>
+<br> <br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto shadow p-3">
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            
+            <h2 class="mb-5 text-center">User Login</h2>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="Input1" class="form-label"><b>Username:</b></label>
+                    <input type="text" class="form-control" name="uname" id="Input1" placeholder="username">
+                </div>
+
+                <div class="mb-3">
+                    <label for="Input2" class="form-label"><b>Password:</b></label>
+                    <input type="password" class="form-control" name="upass" id="upass" placeholder="Enter password">
+                </div>
+
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-outline-danger" value="Login">
+                </div>
+                Not a User?&nbsp;&nbsp;&nbsp; <a href="{% url 'signup' %}" style="text-decoration: none;"
+                    class="btn btn-dark">Sign Up</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

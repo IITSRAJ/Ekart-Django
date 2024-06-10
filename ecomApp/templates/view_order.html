@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} Cart {% endblock %}
+
+
+{% block body %}
+
+{{orders}}
+<div class="row mt-5">
+    <div class="col-md-12">
+        <h4 class="bg-dark text-info p-2"> My Order History </h4>
+        {% for x in products %}
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{x.product.image.url}}" class="card-img-top" alt="product"
+                    style=" height: 300px; object-fit: contain">
+            </div>
+            <div class="col-md-8">
+                <p> <b>Product Name: </b> <br>{{x.product.prod_name}} </p>
+                <p> <b>Product Description:</b><br> {{x.product.desc}} </p>
+                <p> <b>Category: </b><br> {{x.product.category}} </p>
+                <p> <b>Price: </b><br> ₹{{x.product.price}} </p>
+                <p> <b>Quantity: </b><br> {{x.quantity}} </p>
+                <a href="{% url 'addtocart' x.product.prod_id %}" class="btn btn-dark">Repeat Order</a>
+                </p>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

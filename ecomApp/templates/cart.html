@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} Cart {% endblock %}
+
+
+{% block body %}
+
+<!------------------- CART ----------------->
+<div class="row mt-5">
+    <div class="col-md-9">
+        <h4 class="bg-dark text-info p-2">Customer Details </h4>
+        <p><b>Name:</b> &nbsp; {{user.username}}</p>
+        <p><b>Mobile:</b> &nbsp; 9827292829</p>
+        <p><b>Email:</b> &nbsp; {{user.email}}</p>
+
+        <h4 class="bg-dark text-info p-2 mt-2">Cart Details </h4>
+        <div class="col-md-8 mt-1">
+            {% for x in products %}
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{x.product.image.url}}" class="card-img-top" alt="product"
+                        style=" height: 300px; object-fit: contain">
+                </div>
+                <div class="col-md-8">
+                    <p> <b>Product Name: </b> <br>{{x.product.prod_name}} </p>
+                    <p> <b>Product Description:</b><br> {{x.product.desc}} </p>
+                    <p> <b>Category: </b><br> {{x.product.category}} </p>
+                    <p> <b>Price: </b><br> ₹{{x.product.price}} </p>
+
+                    <p><b>Quantity</b>
+                        <a href="{% url 'qty' 0 x.product.prod_id %}"><button class="btn btn-warning">-</button></a>
+                        <input type="number" readonly="readonly" style="width: 50px; height: 33px;"  value="{{x.quantity}}">
+                        <a href="{% url 'qty' 1 x.product.prod_id %}"><button class="btn btn-success">+</button></a>
+                    </p>
+
+                    <a href="{% url 'deleteCartItem' x.product.prod_id %} " class="btn btn-danger">Remove</a>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-3">
+
+        <h4 class="bg-dark text-info p-2"> Total </h4>
+        <p><b>Total Items: </b>{{items}}</p>
+        <p><b>Total Price: </b>₹ {{total}}</p>
+        <a href="{% url 'placeOrder' %}"><button class="btn btn-success">Place Order</button></a>
+        <a href="{% url 'home' %} " class="btn btn-info">Shop More</a>
+    </div>
+</div>
+{% endblock %}
